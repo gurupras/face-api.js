@@ -1,8 +1,7 @@
 import commonjs from 'rollup-plugin-commonjs';
 import node from 'rollup-plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
-import { uglify } from 'rollup-plugin-uglify';
-import path from 'path';
+import { terser } from 'rollup-plugin-terser';
 
 const { minify } = process.env
 
@@ -21,10 +20,11 @@ export default {
     commonjs({
       include: 'node_modules/**'
     })
-  ].concat(minify ? uglify() : []),
+  ],
   output: {
     extend: true,
     file: `dist/face-api${minify ? '.min' : ''}.js`,
+    plugins: [terser()],
     format: 'umd',
     name: 'faceapi',
     globals: {
