@@ -1,4 +1,5 @@
 import * as tf from '@tensorflow/tfjs-core';
+import * as  webgl from '@tensorflow/tfjs-backend-webgl';
 
 import {
   AgeGenderNet,
@@ -192,14 +193,14 @@ if (gpgpu) {
 
 export function describeWithBackend(description: string, specDefinitions: () => void) {
 
-  if (!(gpgpu instanceof tf.webgl.GPGPUContext)) {
+  if (!(gpgpu instanceof webgl.GPGPUContext)) {
     describe(description, specDefinitions)
     return
   }
 
   const defaultBackendName = tf.getBackend()
   const newBackendName = 'testBackend'
-  const backend = new tf.webgl.MathBackendWebGL(gpgpu)
+  const backend = new webgl.MathBackendWebGL(gpgpu)
 
   describe(description, () => {
     beforeAll(() => {
